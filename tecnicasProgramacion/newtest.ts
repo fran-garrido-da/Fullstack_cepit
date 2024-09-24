@@ -23,6 +23,93 @@ const RACES: string[] = [
   "Demigod",
   "God",
 ];
+const GRADES: Array<string> = [
+  "Transcendent",
+  "High-Heaven",
+  "Middle-Heaven",
+  "Low-Heaven",
+  "High-Earth",
+  "Middle-Earth",
+  "Low-Earth",
+  "High-Mortal",
+  "Middle-Mortal",
+  "Low-Mortal",
+];
+const prefix:string[]=[
+  "Heaven's'",
+  "Earth's",
+  "Lord's",
+  "Eight",
+  "9th", 
+  "Thirteen",
+  "Hell's",
+  "Demon's",
+  "Fiend's",
+  "Laborer's",
+  "Evil",
+  "Righteous",
+  "Old",
+  "Ancient",
+  "Immemorial",
+  "Eternal",
+  "Instantaneous",
+]
+const faction:string[]=[
+  //faction
+  "Immortal",
+  "Judgment",
+  "Devilish",
+  "Fiendish",
+  "Heavenly",
+  "Trigram"
+]
+const elemental1:string[]=[
+  //--------Elemental 1
+  "Fire",
+  "Lightning",
+  "Water",
+  "Wind",
+  "Cold",
+  "Earthen",
+  "Iron",
+  "Light",
+  "Shadow"
+]
+const elemental2:string[]=[
+  //--------Elemental 2
+  "Volcanic",
+  "Storm",
+  "Flooding",
+  "Cyclonic",
+  "Frost",
+  "Mountains",
+  "Silver",
+  "Holy",
+  "Cursed"
+]
+const elemental3:string[]=[
+  "Inferno",
+  "Thunderous",
+  "Oceanic",
+  "Hurricane",
+  "Glacial",
+  "World",
+  "Golden",
+  "Sanctified",
+  "Desacrated"
+]
+const elemental4:string[]=[
+  //--------Elemental 4
+  "Fire God's ",
+  "Lightning God's ",
+  "Water God's ",
+  "Wind God's ",
+  "Eternal Frost ",
+  "Earth God's ",
+  "Star Iron ",
+  "Heaven's",
+  "Netherworld's",
+]
 type skill={
   name:string,
   index:number,
@@ -31,10 +118,21 @@ type skill={
   multi1:number,
   multi2:number
 } 
+type technique={
+  name:string,
+  index:number,
+  level:number,
+  type:string,
+  grade:number,
+  exp:number,
+  multi1:number,
+  multi2:number
+} 
 let pj: any = {
 
   physique: {},
   skills: [],
+  techniques:[],
   physicalStats:{},
   selectRace() {
     this.race = RACES[Math.floor(Math.random() * (RACES.length - 1))];
@@ -110,6 +208,40 @@ let pj: any = {
     pj.skills[pj.skills.length] = skill
     skill.index = pj.skills.length-1
   },
+  findSkill(name:string):number{
+    let range= pj.skills.length
+    let result:number = -1 
+    for (let i = 0;i<range;i++){
+       if (pj.skills[i].name===name){
+         result = pj.skills[i].index
+       }
+     }
+     return result
+  },
+  learnTechnique(name1:string,name2:string,name3:string,type:string){
+    let technique:technique = {
+      name: name1+name2+name3,
+      index: 0,
+      exp: 0,
+      level: 1,
+      multi1: Math.round(Math.random() * 100),
+      multi2: 1,
+      type: type,
+      grade: Math.floor(Math.random()*GRADES.length)
+    }
+    pj.techniques[pj.techniques.length] = technique
+    technique.index = pj.techniques.length-1
+  },
+  findTechnique(name:string):number{
+    let range= pj.techniques.length
+    let result:number = -1 
+    for (let i = 0;i<range;i++){
+       if (pj.techniques[i].name===name){
+         result = pj.techniques[i].index
+       }
+     }
+     return result
+  },
   trainingOptions() {
     console.log(`\n How would you like to train?
         \n []BODY = train your strength and reflexes for a year.
@@ -117,10 +249,30 @@ let pj: any = {
         \n []WEAPONS = Train with your weapon of choice`);
     
   },
-  bodyTraining(){
-    
+  bodyTrainingChoice(){
+    console.log(`\n[1] = Train your stamina
+                 \n[2] = Train your strength
+                 \n[3] = Train your agility`)
+    let input:number = rlSync.questionInt()  
+    return input
   },
-  techniqueTraining(){
+  bodyTraining(input:number){
+    switch(input){
+      case 1:
+        pj.physicalStats.stamina++
+        console.log(`You train your stamina, feeling more resilient`)
+        break;
+      case 2:
+        pj.physicalStats.strength++
+        console.log(`You train your strength, feeling more powerful`)
+        break;
+      case 3:
+        pj.physicalStats.agility++
+        console.log(`You train your agility, feeling faster and sharper`)
+        break;
+    }
+  },
+  techniqueTrainingChoice(){
 
   },
   weaponTrainingChoice(){
@@ -140,16 +292,25 @@ let pj: any = {
   weaponTraining(){
     
   },
-  findSkill(name:string):number{
-   let range= pj.skills.length
-   let result:number = -1 
-   for (let i = 0;i<range;i++){
-      if (pj.skills[i].name===name){
-        result = pj.skills[i].index
-      }
-    }
-    return result
-  }
+  getSkillName(name:string){
+    pj.skills[pj.findSkill(name)].name
+  },
+  getSkillLevel(name:string){
+    pj.skills[pj.findSkill(name)].level
+  },
+  getSkillExp(name:string){
+    pj.skills[pj.findSkill(name)].exp
+  },
+  getTechniqueName(name:string){
+    pj.techniques[pj.findTechnique(name)].name
+  },
+  getTechniqueLevel(name:string){
+    pj.techniques[pj.findTechnique(name)].level
+  },
+  getTechniqueExp(name:string){
+    pj.techniques[pj.findTechnique(name)].exp
+  },
+  
 };
 
 pj.status = "healthy";
@@ -160,6 +321,7 @@ console.log(`\nSkill: ${pj.skills[pj.findSkill("Forging")].name}
              \nLevel: ${pj.skills[pj.findSkill("Forging")].level}
              \nExp: ${pj.skills[pj.findSkill("Forging")].exp}`)
 
+pj.bodyTraining(pj.bodyTrainingChoice())
 
 
 rlSync.question()
