@@ -47,15 +47,6 @@ const WEAPONS:string[]=[
   "Exotic weapons",
 ]
 const WEAPONSAVAILABLE:string[]=[
-  "Swords",
-  "Sabres",
-  "Maces",
-  "Spears",
-  "Knives",
-  "Bows",
-  "Thrown weapons",
-  "Greatweapons",
-  "Exotic weapons",
 ]
 const prefix:string[]=[
   "Heaven's'",
@@ -132,6 +123,27 @@ const elemental4:string[]=[
   "Heaven's",
   "Netherworld's",
 ]
+const CITIES: Array<string> = [
+  "Xian Long",
+  "Yangsu",
+  "Xugong",
+  "Kangpo",
+  "Danying",
+  "Xiangtong",
+  "Fengjing",
+  "Yanghung",
+  "Dongsong",
+  "Xianhai",
+];
+const REGIONS: Array<string> = [
+  "Heavenly Dragon Empire",
+  "Heaven-earth Immortal Kingdom",
+  "Country of Yan",
+  "White Tiger Plains",
+  "Wildlands",
+  "Calamity Mountain Peaks",
+  "Disaster Wasteland",
+];
 type skill={
   name:string,
   index:number,
@@ -155,11 +167,30 @@ let pj: any = {
   physique: {},
   skills: [],
   techniques:[],
+  unarmed:{
+    fist:{
+      comprehension:0,
+      practice:0
+    },
+    palm:{
+      comprehension:0,
+      practice:0
+    },
+    kick:{
+      comprehension:0,
+      practice:0
+    },
+
+  },
   physicalStats:{},
-  selectRace() {
+  activeCity:{},
+  activeRegion:{},
+  cities:[],
+
+  setRace() {
     this.race = RACES[Math.floor(Math.random() * (RACES.length - 1))];
   },
-  selectSubrace() {
+  setSubrace() {
     let rng2 = Math.round(Math.random() * 10);
     let monsterLgth = monsterRaces.length;
     let beastLgth = beastRaces.length;
@@ -173,6 +204,50 @@ let pj: any = {
       }
     }
   },
+  initCity(){
+    for (let i=0;i<CITIES.length;i++){
+      pj.cities[i]={
+        name:CITIES[i],
+        grade:GRADES[i],
+        relations:0,
+        school:true
+      }
+      if(pj.activeRegion.domRace===RACES[0]||pj.activeRegion.domRace===RACES[0]&&pj.cities[i].grade>5){
+        pj.cities[i].school = false
+      }
+
+    }
+  },  
+  travelSelection(){
+    console.log(`Select city to travel to: `)
+    let range = pj.cities.length
+    for (let i=0;i<range;i++){
+      console.log(`[${i}] = Travel to ${pj.cities[i].name}`)
+    }
+    let input = rlSync.questionInt()
+    return input
+  },
+  selectCity(input:number){
+    pj.activeCity=pj.cities[input]
+  },
+  newRegion(){
+    let newregion = REGIONS[Math.floor(Math.random()*REGIONS.length)]
+
+    pj.activeRegion = {
+      name: newregion,
+      domRace:RACES[Math.floor(Math.random())*RACES.length] 
+    }
+  },
+  findRegion(name:string):number{
+    let range= pj.regions.length
+    let result:number = -1 
+    for (let i = 0;i<range;i++){
+       if (pj.regions[i].name===name){
+         result = i
+       }
+     }
+     return result
+  },
   startQiCultivation() {
     this.cultivExp = 1;
     this.realm = {},
@@ -184,7 +259,7 @@ let pj: any = {
     
   },
   cultivate() {
-    this.realm.subrealm.accum = this.realm.subrealm.accum + this.cultivExp;
+    this.realm.subrealm.accum += this.cultivExp;
   },
   physicalInit() {
     this.physicalStats.stamina = 1
@@ -266,9 +341,10 @@ let pj: any = {
   },
   trainingOptions() {
     console.log(`\n How would you like to train?
-        \n []BODY = train your strength and reflexes for a year.
-        \n []TECHNIQUES = Practice your techniques and strategies for a year.
-        \n []WEAPONS = Train with your weapon of choice`);
+        \n [1]:BODY = train your strength and reflexes for a year.
+        \n [2]:TECHNIQUES = Practice and understand your techniques.
+        \n [3]:WEAPONS = Train with your weapon of choice
+        \n [4]:UNARMED FIGHTING = Train your most trusted fists, kicks or palms`);
     
   },
   bodyTrainingChoice(){
@@ -292,6 +368,7 @@ let pj: any = {
         pj.physicalStats.agility++
         console.log(`You train your agility, feeling faster and sharper`)
         break;
+      default:
     }
   },
   techniqueTrainingChoice(){
@@ -299,7 +376,10 @@ let pj: any = {
   },
   weaponTrainingChoice():number{
     console.log(`\nChoose what to train with: `)
-    let range = WEAPONS.length
+    let range = WEAPONSAVAILABLE.length
+    if (range<1){
+      console.log(`\nYou have no weapons to train with`)
+    }
     for (let i=0;i<range;i++){
       console.log(`\n[${i+1}]: ${WEAPONSAVAILABLE[i]}`)
     }
@@ -326,37 +406,99 @@ let pj: any = {
       console.log(`Gained new level in ${WEAPONSAVAILABLE[input-1]}`)
     }
   },
-  getSkillName(name:string):string{
-   return pj.skills[pj.findSkill(name)].name
+  unarmedTraining(input){
+    switch(input){
+      case 1:
+        if (pj.getFist().practice<100){
+          pj.getFist().practice++
+          console.log(`Gained experience in fighting with your fists`)
+        }else if(pj.getFist().comprehension<100){
+          pj.getFist().comprehension++
+          console.log(`Gained new level of comprehension in your fists`)}
+        break;
+      case 2:
+        if (pj.getPalm().practice<100){
+          pj.getPalm().practice++
+          console.log(`Gained experience in fighting with your palms`)
+        }else if(pj.getPalm().comprehension<100){
+          pj.getPalm().comprehension++
+          console.log(`Gained new level of comprehension in your palms`)}
+        break;
+      case 3:
+        if (pj.getKick().practice<100){
+          pj.getKick().practice++
+          console.log(`Gained experience in fighting with your kicks`)
+        }else if(pj.getKick().comprehension<100){
+          pj.getKick().comprehension++
+          console.log(`Gained new level of comprehension in your kicks`)}
+        break;
+      default:
+    }
   },
-  getSkillLevel(name:string):number{
-   return pj.skills[pj.findSkill(name)].level
+  unarmedTrainingChoice(){
+    console.log(`\n[1] = Train your fists
+                 \n[2] = Train your palms
+                 \n[3] = Train your kicks`)
+    let input:number = rlSync.questionInt()  
+    return input
   },
-  getSkillExp(name:string):number{  
-    return pj.skills[pj.findSkill(name)].exp
+  getFist(){
+    return pj.unarmed.fist
   },
-  getTechniqueName(name:string){
-    return pj.techniques[pj.findTechnique(name)].name
+  getPalm(){
+    return pj.unarmed.palm
   },
-  getTechniqueLevel(name:string){
-    return pj.techniques[pj.findTechnique(name)].level
+  getKick(){
+    return pj.return.kick
   },
-  getTechniqueExp(name:string){
-    return pj.techniques[pj.findTechnique(name)].exp
+  getSkillbyName(name:string){
+   return pj.skills[pj.findSkill(name)]
   },
-  
+  getTechniquebyName(name:string){
+    return pj.techniques[pj.findTechnique(name)]
+  },
+  getBlood(){
+    return this.physique.blood
+  },
+  getBones(){
+    return this.physique.bones
+  },
+  getMuscles(){
+    return this.physique.muscle
+  },
+  getTendons(){
+    return this.physique.tendons
+  },
+  getMeridians(){
+    return this.physique.meridians
+  },
+  getOrgans(){
+    return this.physique.organs
+  },
+  getStamina(){
+    return this.physicalStats.stamina
+  },
+  getStrength(){
+    return this.physicalStats.strength
+  },
+  getAgility(){
+    return this.physicalStats.agility
+  },
+  getStatus(){
+    return pj.status
+  }
 };
 
 pj.status = "healthy";
 pj.name = rlSync.question(`\nIntroduzca nombre de personaje: `);
-pj.learnSkill("Forging")
-pj.learnSkill("Mining")
-console.log(`\nSkill: ${pj.skills[pj.findSkill("Forging")].name}
-             \nLevel: ${pj.skills[pj.findSkill("Forging")].level}
-             \nExp: ${pj.skills[pj.findSkill("Forging")].exp}`)
+pj.selectRace();
+pj.selectSubrace();
+pj.newRegion();
+pj.initCity()
+
 
 //pj.bodyTraining(pj.bodyTrainingChoice())
 //pj.weaponTraining(pj.weaponTrainingChoice())
-
+console.log(pj)
 rlSync.question()
 
