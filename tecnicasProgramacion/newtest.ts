@@ -35,6 +35,28 @@ const GRADES: Array<string> = [
   "Middle-Mortal",
   "Low-Mortal",
 ];
+const WEAPONS:string[]=[
+  "Swords",
+  "Sabres",
+  "Maces",
+  "Spears",
+  "Knives",
+  "Bows",
+  "Thrown weapons",
+  "Greatweapons",
+  "Exotic weapons",
+]
+const WEAPONSAVAILABLE:string[]=[
+  "Swords",
+  "Sabres",
+  "Maces",
+  "Spears",
+  "Knives",
+  "Bows",
+  "Thrown weapons",
+  "Greatweapons",
+  "Exotic weapons",
+]
 const prefix:string[]=[
   "Heaven's'",
   "Earth's",
@@ -275,40 +297,52 @@ let pj: any = {
   techniqueTrainingChoice(){
 
   },
-  weaponTrainingChoice(){
-    console.log(`\nChoose what to train with:
-      \n[1]: Swords
-      \n[2]: Sabres
-      \n[3]: Maces
-      \n[4]: Spears
-      \n[5]: Knives
-      \n[6]: Bows
-      \n[7]: Thrown weapons
-      \n[8]: Greatweapons
-      \n[9]: Exotic weapons
-      \nKeep in mind, that you have to own the type of weapon to train with
-      \nor be in a training institution that has them.`);
+  weaponTrainingChoice():number{
+    console.log(`\nChoose what to train with: `)
+    let range = WEAPONS.length
+    for (let i=0;i<range;i++){
+      console.log(`\n[${i+1}]: ${WEAPONSAVAILABLE[i]}`)
+    }
+    console.log(`\nKeep in mind, that you have to own the type of weapon to train with
+                 \nor be in a training institution that has them.`);
+    let input:number = rlSync.questionInt()
+    return input
   },
-  weaponTraining(){
-    
+  weaponTraining(input:number){
+    for (let i = 0;i<WEAPONSAVAILABLE.length;i++){
+      if (i === (input-1)){
+        pj.weaponSelect(input)
+      }
+    }
   },
-  getSkillName(name:string){
-    pj.skills[pj.findSkill(name)].name
+  weaponSelect(input:number){
+    if(pj.findSkill(WEAPONSAVAILABLE[input-1])===-1){
+      pj.learnSkill(WEAPONSAVAILABLE[input-1])
+    }else if (pj.getSkillExp(WEAPONSAVAILABLE[input-1])<100){
+      pj.skills[pj.findSkill(WEAPONSAVAILABLE[input-1])].exp++
+      console.log(`Gained experience in ${WEAPONSAVAILABLE[input-1]}`)
+    }else if(pj.getSkillLevel(WEAPONSAVAILABLE[input-1])<10){
+      pj.skills[pj.findSkill(WEAPONSAVAILABLE[input-1])].level++
+      console.log(`Gained new level in ${WEAPONSAVAILABLE[input-1]}`)
+    }
   },
-  getSkillLevel(name:string){
-    pj.skills[pj.findSkill(name)].level
+  getSkillName(name:string):string{
+   return pj.skills[pj.findSkill(name)].name
   },
-  getSkillExp(name:string){
-    pj.skills[pj.findSkill(name)].exp
+  getSkillLevel(name:string):number{
+   return pj.skills[pj.findSkill(name)].level
+  },
+  getSkillExp(name:string):number{  
+    return pj.skills[pj.findSkill(name)].exp
   },
   getTechniqueName(name:string){
-    pj.techniques[pj.findTechnique(name)].name
+    return pj.techniques[pj.findTechnique(name)].name
   },
   getTechniqueLevel(name:string){
-    pj.techniques[pj.findTechnique(name)].level
+    return pj.techniques[pj.findTechnique(name)].level
   },
   getTechniqueExp(name:string){
-    pj.techniques[pj.findTechnique(name)].exp
+    return pj.techniques[pj.findTechnique(name)].exp
   },
   
 };
@@ -321,8 +355,8 @@ console.log(`\nSkill: ${pj.skills[pj.findSkill("Forging")].name}
              \nLevel: ${pj.skills[pj.findSkill("Forging")].level}
              \nExp: ${pj.skills[pj.findSkill("Forging")].exp}`)
 
-pj.bodyTraining(pj.bodyTrainingChoice())
-
+//pj.bodyTraining(pj.bodyTrainingChoice())
+//pj.weaponTraining(pj.weaponTrainingChoice())
 
 rlSync.question()
 
