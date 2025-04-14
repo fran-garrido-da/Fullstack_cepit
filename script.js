@@ -28,9 +28,7 @@ const noFilter = document.getElementById("noFilter");
 const activePage = document.getElementById("activePage");
 const maxPage = document.getElementById("maxPage");
 prevButton.toggleAttribute("disabled");
-
 await loadCharacters();
-
 function showCard(character) {
   const newCard = document.createElement("article");
   newCard.classList.add("card");
@@ -49,16 +47,14 @@ function showCard(character) {
         </div>
         `;
   characterContainer.appendChild(newCard);
-}
-
+};
 async function loadCharacters() {
   characterContainer.innerHTML = "";
   const characterPage = await api.getFromApi(query);
   await characterPage.results.forEach((character) => showCard(character));
   activePage.innerText = page;
   maxPage.innerText = characterPage.info.pages;
-
-}
+};
 aliveFilter.addEventListener("click", async () => {
   filter = `&status=alive`;
   query = `character?page=${page}${filter}`;
@@ -83,7 +79,7 @@ nextButton.addEventListener("click", async () => {
   if (page === 1) {
     prevButton.toggleAttribute("disabled");
   }
-  if (page < maxPages) {
+  if (page < parseInt(maxPage.innerText)) {
     page++;
     query = `character?page=${page}${filter}`;
     await loadCharacters();
@@ -93,7 +89,7 @@ prevButton.addEventListener("click", async () => {
   if (page === 2) {
     prevButton.toggleAttribute("disabled");
   }
-  if (page < maxPages && page > 1) {
+  if (page < parseInt(maxPage.innerText) && page > 1) {
     page--;
     query = `character?page=${page}${filter}`;
     await loadCharacters();
