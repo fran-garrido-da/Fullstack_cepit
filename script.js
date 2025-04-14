@@ -83,7 +83,7 @@ nextButton.addEventListener("click", async () => {
   if (page === 1) {
     prevButton.toggleAttribute("disabled");
   }
-  if (page < parseInt(maxPage.innerText)) {
+  if (page < maxPages) {
     page++;
     query = `character?page=${page}${filter}`;
     await loadCharacters();
@@ -93,7 +93,7 @@ prevButton.addEventListener("click", async () => {
   if (page === 2) {
     prevButton.toggleAttribute("disabled");
   }
-  if (page < parseInt(maxPage.innerText) && page > 1) {
+  if (page < maxPages && page > 1) {
     page--;
     query = `character?page=${page}${filter}`;
     await loadCharacters();
