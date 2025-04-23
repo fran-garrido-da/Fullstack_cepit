@@ -40,16 +40,10 @@ async function createModal(character) {
   newModal.innerHTML = `
          <div class="modal-content">
              <h5 class="modal-title"> ${character.name}</h5>
-             <h6 class="dialog-title"> ${character.species} ${
-    character.type ? `/ ${character.type}` : ""
-  }</h6>            
-             <img src="${character.image}" class="dialog-img-top" alt="${
-    character.name
-  }">
+             <h6 class="dialog-title"> ${character.species} ${character.type ? `/ ${character.type}` : ""}</h6>            
+             <img src="${character.image}" class="dialog-img-top" alt="${character.name}">
              <p>Status: ${character.status}</p>
-             <p>First Appearance: ${episode.name} aired on ${
-    episode.air_date
-  }</p>
+             <p>First Appearance: ${episode.name} aired on ${episode.air_date}</p>
              <p>Status: ${character.status}</p>
          </div>`;
   characterContainer.appendChild(newModal);
@@ -61,12 +55,8 @@ function showCard(character) {
   newCard.innerHTML = `
         <div class="card-body" id="${character.id}Card">
             <h5 class="card-title"> ${character.name}</h5>
-            <h6 class="card-title"> ${character.species} ${
-    character.type ? `/ ${character.type}` : ""
-  }</h6>            
-            <img src="${character.image}" class="card-img-top" alt="${
-    character.name
-  }">
+            <h6 class="card-title"> ${character.species} ${character.type ? `/ ${character.type}` : ""}</h6>            
+            <img src="${character.image}" class="card-img-top" alt="${character.name}">
             <p>Status: ${character.status}</p>
         </div>
         `;
