@@ -13,7 +13,7 @@ const api = {
       console.error(err);
       return { error: true, status: err.status, message: err.message };
     }
-  },
+  }
 };
 let query = "character";
 let page = 1;
