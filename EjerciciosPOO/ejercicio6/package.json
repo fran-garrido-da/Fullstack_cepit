@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio6",
+  "version": "1.0.0",
+  "main": "calculadora.js",
+  "scripts": {
+    "test": "tsc calculadora.ts && node calculadora.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

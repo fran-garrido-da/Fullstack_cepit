@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio9",
+  "version": "1.0.0",
+  "main": "decodificador.js",
+  "scripts": {
+    "test": "tsc decodificador.ts && node decodificador.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

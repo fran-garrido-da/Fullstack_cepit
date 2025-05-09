@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio14",
+  "version": "1.0.0",
+  "main": "generala.js",
+  "scripts": {
+    "test": "node generala.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

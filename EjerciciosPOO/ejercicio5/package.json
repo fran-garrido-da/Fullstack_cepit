@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/readline-sync": "^1.4.8"
+  },
+  "name": "ejercicio5",
+  "version": "1.0.0",
+  "main": "libro.js",
+  "scripts": {
+    "test": "tsc libro.ts && node libro.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

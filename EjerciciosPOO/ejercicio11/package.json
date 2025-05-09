@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio11",
+  "version": "1.0.0",
+  "main": "escuela.js",
+  "scripts": {
+    "test": "node escuela.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

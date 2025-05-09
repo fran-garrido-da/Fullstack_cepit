@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio4",
+  "version": "1.0.0",
+  "main": "rectangulo.js",
+  "scripts": {
+    "test":"tsc rectangulo.ts && node rectangulo.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio1",
+  "version": "1.0.0",
+  "main": "auto.js",
+  "scripts": {
+    "test":"tsc auto.ts && node auto.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

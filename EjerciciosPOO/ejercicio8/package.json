@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio8",
+  "version": "1.0.0",
+  "main": "bancaria.js",
+  "scripts": {
+    "test": "tsc bancaria.ts && node bancaria.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

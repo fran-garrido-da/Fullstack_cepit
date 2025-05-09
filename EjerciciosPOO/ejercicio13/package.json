@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio13",
+  "version": "1.0.0",
+  "main": "gestorDeLibros.js",
+  "scripts": {
+    "test": "node gestorDeLibros.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

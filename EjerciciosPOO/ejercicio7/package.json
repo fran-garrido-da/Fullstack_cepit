@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio7",
+  "version": "1.0.0",
+  "main": "dado.js",
+  "scripts": {
+    "test": "tsc dado.ts && node dado.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

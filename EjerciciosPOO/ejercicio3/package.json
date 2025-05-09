@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio3",
+  "version": "1.0.0",
+  "main": "televisor.js",
+  "scripts": {
+    "test": "tsc televisor.ts && node televisor.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

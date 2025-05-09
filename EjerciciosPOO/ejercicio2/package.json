@@ -1,0 +1,12 @@
+{
+  "name": "ejercicio2",
+  "version": "1.0.0",
+  "main": "persona.js",
+  "scripts": {
+    "script":"tsc persona.ts && node persona.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

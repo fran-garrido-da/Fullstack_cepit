@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio10",
+  "version": "1.0.0",
+  "main": "registroAutomotor.js",
+  "scripts": {
+    "test": "tsc registroAutomotor.ts && node registroAutomotor.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
